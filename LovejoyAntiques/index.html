@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<meta charset="UTF-8">
+		<!-- Stylesheet handles basic structure of website to ensure cvlean and structured look. Found on Bootstrap website -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<title>Lovejoy Antiques Registeration Form</title>	
+		<!-- My own style sheet which hnmadles look of website to ensure consistent look over all intercative pages, and to style objects such as nav bars, tables for a consistent look across all pages.-->
+		<link rel="stylesheet" href="style1.css">
+	</head>
+
+	<body>
+		<!-- Divs used for fomratyting/CSS styling-->
+			<div class="container">
+				<div class="row">
+					<div class = "col-md-12">
+						<!-- Register form with all elements to be entered by the users-->
+						<h2><strong>LoveJoy Antique Evaluations: </strong><br>Registration Form</h2><br>
+						<p><strong>Please fill in the entire form to register for an account.</strong></p>
+						<!-- On Submit, redirects to Register.php-->
+						<form action="register.php" method="post" autocomplete="off">
+							<div class="form-group">
+								<label for="username"></label>
+							</div>
+							<!-- Textboxes for user to enter username, fullname, email & telephone number. These have HTML5 validation using the attribute 'type' along with 'pattern' for email, fullname & username-->
+							<div class="form-group">	
+								<input type="text" name="username" minlength="3" placeholder="Username" id="username" pattern="[A-Za-z0-9]+" class="form-control" required>
+								<label for="fullname"></label>
+							</div>
+							<!-- Ensure name is no less than 6 characters, and pattern only allows for letter, spaces and hypens. These are needed in case of double barrel names-->
+							<div class="form-group">	
+								<input type="text" name="fullname" placeholder="Full name" minlength="6" id="fullname" class="form-control" pattern="[A-Za-z -]+" required>
+								<label for="email"></label>
+							</div>
+							<!-- HTML5 'Type' for email ensures an @ symbol along with a 'abc.abc' afterwords -->
+							<div class="form-group">
+								<input type="email" name="email" placeholder="Email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+								<label for="telephone"></label>
+							</div>
+							<!-- HTML5 'Type' for tel i.e. telephone ensures input is a phone number. The pattern set requires the user to enter the UK 0 then 10 numerical digits.-->
+							<div class="form-group">
+								<input type="tel" name="telephone" placeholder="Telephone Number" pattern="[0]{1}[0-9]{10}" class="form-control" required>
+								<label for="securityQuestion"></label>
+								<small>Format: 01234567890</small>
+							</div>
+							<!-- Dropdown box allows for users to select a security question of their choice. These are needed for password resets.-->
+							<div class="form-group">
+								<select name="securityQuestion" class="form-control">
+									<option value="What is your Mothers maiden name?" selected>What is your Mothers maiden name?</option>
+									<option value="What is the name of your first pet?">What is the name of your first pet?</option>
+									<option value="What is your favourite movie?">What is your favourite movie?</option>
+									<option value="What is your least favourite cereal?">What is your least favourite cereal?</option>
+									<option value="In what city where you born?">In what city where you born?</option>
+									<option value="What was the name of your first school?">What was the name of your first school?</option>
+								</select>
+								<label for="securityAnswer"></label>
+							</div>
+							<!-- Answer for Security Question -->
+							<div class="form-group">
+								<input type="text" name="securityAnswer" placeholder="Answer to Security Question" id="securityAnswer" pattern="[A-Za-z0-9 -]+" class="form-control" required>
+								<label for="password"></label>
+							</div>
+							<!-- Password for user. Min length 10 characters. Type 'Password' hides inputs as *s. Further validation is done in PHP -->
+							<div class="form-group">
+								<input type="password" name="password" placeholder="Password" id="password" class="form-control" minlength="10" required>
+								<label for="confirm_password"></label>
+								<small>Must be atleast 10 characters long & contain atleast one uppercase, lowercase, number & special character</small>
+							</div>
+							<!-- Confirm Password field. Same settings as Password field-->
+							<div class="form-group">
+								<input type="password" name="confirm_password" placeholder="Confirm Password" minlength="10" id="confirm_password" class="form-control" required>
+							</div>
+							<!-- Submit Button -->
+							<div class="form-group">
+								<input type="submit" class="btn btn-primary" value="Register">
+							</div>
+							<!-- Link to Login form -->
+							<p>Already have an account? <a href="login.php">Login here</a>.</p>
+					</form>
+				</div>
+			</div>
+		</div>>
+		<script>
+		var form = document.querySelector('.register form');
+		form.onsubmit = function(event) {
+			event.preventDefault();
+			var form_data = new FormData(form);
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', form.action, true);
+			xhr.onload = function () {
+				document.querySelector('.msg').innerHTML = this.responseText;
+			};
+			xhr.send(form_data);
+		};
+		</script>
+	</body>
+</html>
